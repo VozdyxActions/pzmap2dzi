@@ -57,7 +57,7 @@ class BaseRender(TextureRender):
             if tex:
                 tex.render(im_getter.get(), ox, oy)
             else:
-                print('missing tile: {}'.format(tiles[t]))
+                print('missing tile: tile={tile} x={x} y={y}'.format(tile=tiles[t], x=x, y=y))
 
 def color_from_sums(color_sums):
     if color_sums:
