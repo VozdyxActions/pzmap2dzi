@@ -1,7 +1,7 @@
 pynput
 lupa
 pyclipper
-pillow
+pillow==9.5.0
 pyyaml
 flask
 waitress

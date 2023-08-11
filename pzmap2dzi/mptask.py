@@ -189,6 +189,7 @@ def split_list(a, n):
     k, m = divmod(len(a), n)
     return [a[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n)]
 
+
 def rebalance(splits, slot):
     if len(splits[slot]) != 0:
         return splits
@@ -205,6 +206,7 @@ def rebalance(splits, slot):
         splits[idx] = jobs[mid:]
         splits[slot] = jobs[:mid]
         splits[slot].reverse()
+
 
 class SplitScheduler(object):
     def __init__(self, verbose=False):
