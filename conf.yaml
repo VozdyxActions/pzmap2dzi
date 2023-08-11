@@ -1,32 +1,21 @@
 pz_root: |- # project zomboid game folder
-    D:\SteamLibrary\steamapps\common\ProjectZomboid
+    E:\CyberX\Games\SteamLibrary\common\ProjectZomboid
 
 output_path: |- # render output folder
     E:\pzmap
 
 mod_root: |- # steam workshop folder for project zomboid
-    D:\SteamLibrary\steamapps\workshop\content\108600
+    E:\CyberX\Games\SteamLibrary\workshop\content\108600
 
 custom_root: |- # custom file folder
     .
 
 # Specify maps to be rendered. See map_data.yaml for map names
 # The base layer map to be rendered. default = Muldraugh, KY
-base_map: default
+base_map: MapName1
 # Additional overlay maps to be rendered
 mod_maps:
-#    - Ashenwoodmod
-#    - Bedford Falls
-#    - Blueberry
-#    - Chinatown, KY
-#    - Chinatown Expansion, KY
-#    - FortRedstone
-#    - Grapeseed
-#    - Greenleaf
-#    - li_township
-#    - Petroville
-#    - RavenCreek
-#    - Trelai_4x4_Steam
+#    - MapName1
 
 render_conf:
     # main conf
@@ -34,14 +23,14 @@ render_conf:
     # show profiling infomation
     profile: false
     # thread count
-    worker_count: 16
+    worker_count: 6
     # set hotkey to stop render (rerun render to resume)
     # hotkey examples:
     #     <ctrl>+<alt>+a    ctrl + alt + a
     #     a                 the key "a"
     #     <f8>              f8
     #     <cmd>+<f2>        windows key + f2
-    break_key: ''
+    break_key: '<f8>'
 
     # dzi conf
     # dzi tile size
@@ -50,7 +39,7 @@ render_conf:
     layers: 8
     # use jpg for bottom level image format instead of png
     # does not affect overlay mod maps or top view map
-    use_jpg_for_layer0: true
+    use_jpg_for_layer0: false
 
     # discard bottom levels to save space at the cost of zoom in resolution
     # require python 3.8+ with cache enabled
@@ -90,14 +79,14 @@ render_conf:
     # eable flower on trees and bushes
     flower: false
     # supported season: spring, summer, summer2, autumn, winter
-    season: summer2
+    season: summer
     # normal tree size, range from 0 to 3 (inclusive)
     tree_size: 2
     # large tree size, range from 0 to 5 (inclusive)
     jumbo_tree_size: 4
     # large tree type, from: 0 to 10  (inclusive)
     # see _TREE_DEF in pzmap2dzi/plants.py for more detail
-    jumbo_tree_type: 0
+    jumbo_tree_type: 6
     # square color method in top view mode
     # supported method:
     # base: only use the color of the floor tile
@@ -105,7 +94,7 @@ render_conf:
     # avg: caculate an average color of all tiles
     # carto-zed: Carto-Zed like color theme
     top_view_color_mode: avg
-    
+
     # font settings
     default_font: arial.ttf
     default_font_size: 20
@@ -114,14 +103,14 @@ render_conf:
     # room_font_size: 20
 
     # zombie heatmap
-    zombie_count: true
+    zombie_count: false
     # zombie count font settings, using default font if omitted
     # zombie_count_font: arial.ttf
     zombie_count_font_size: 40
 
     # objects areas
-    vehicle: true
-    special_zombie: true
+    vehicle: false
+    special_zombie: false
     stroy: true
     # objects font settings, using default font if omitted
     # objects_font: arial.ttf

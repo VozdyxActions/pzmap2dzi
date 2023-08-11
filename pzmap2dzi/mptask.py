@@ -240,12 +240,13 @@ class SplitScheduler(object):
 
 class TestWorker(object):
     def on_job(self, job):
+        print(job)
         import time, random
         time.sleep(random.random()) # print(job)
 def test():
     worker = TestWorker()
     task = Task(worker, SplitScheduler(True))
-    task.run(list(range(100)), 10)
+    task.run(list(range(100)), 20)
 
 if __name__ == '__main__':
     test()

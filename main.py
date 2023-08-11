@@ -4,15 +4,18 @@ from distutils.dir_util import copy_tree
 import re
 import json
 
+
 def parse_conf(args):
     with open(args.conf, 'r') as f:
         conf = yaml.safe_load(f.read())
     return conf
 
+
 def parse_map(args):
     with open(args.map_data, 'r') as f:
         map_data = yaml.safe_load(f.read())
     return map_data
+
 
 def unpack(args):
     from pzmap2dzi import texture
@@ -43,6 +46,7 @@ def unpack(args):
             output = os.path.join(conf['output_path'], 'texture', name)
             tl.save_all(output, conf['render_conf']['worker_count'])
 
+
 def get_conf(options, name, cmd, key, default):
     value = options.get('{}[{}]({})'.format(key, name, cmd))
     if value:
@@ -58,12 +62,13 @@ def get_conf(options, name, cmd, key, default):
         return value
     return default
 
+
 def render_map(cmd, conf, map_data, map_name, is_base):
     from pzmap2dzi import render
     if cmd not in render.RENDER_CMD:
         print('unspported render cmd: {}'.format(cmd))
         return False
-    DZI, Render = render.RENDER_CMD[cmd]
+    dzi_type, render_cmd = render.RENDER_CMD[cmd]
     options = conf['render_conf'].copy()
     map_conf = map_data['maps'][map_name]
     map_root = conf[map_conf['map_root']]
@@ -94,12 +99,13 @@ def render_map(cmd, conf, map_data, map_name, is_base):
     options['encoding'] = map_conf['encoding']
 
     print('render [{}] for map [{}]'.format(cmd, map_name))
-    r = Render(**options)
+    r = render_cmd(**options)
     if hasattr(r, 'update_options'):
         options = r.update_options(options)
-    dzi = DZI(options['input'], **options)
-    suc = dzi.render_all(r, options['worker_count'], options['break_key'], options['verbose'], options['profile'])
+    dzi_type = dzi_type(options['input'], **options)
+    suc = dzi_type.render_all(r, options['worker_count'], options['break_key'], options['verbose'], options['profile'])
     return suc
+
 
 def save_mod_map_list(conf):
     mod_maps = os.path.join(conf['output_path'], 'html', 'mod_maps')
@@ -111,6 +117,7 @@ def save_mod_map_list(conf):
             maps.append(f)
     with open(os.path.join(mod_maps, 'map_list.json'), 'w') as f:
         f.write(json.dumps(maps))
+
 
 def render(args):
     conf = parse_conf(args)
@@ -132,6 +139,7 @@ def render(args):
             print('render [{}] for map [{}] done'.format(cmd, map_name))
     save_mod_map_list(conf)
 
+
 def copy(args):
     conf = parse_conf(args)
     script_path = os.path.dirname(os.path.realpath(__file__))
@@ -150,10 +158,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='pzmap2dzi render')
     parser.add_argument('-c', '--conf', type=str, default='conf.yaml')
     parser.add_argument('-m', '--map-data', type=str, default='map_data.yaml')
-    parser.add_argument('cmd', type=str)
-    parser.add_argument('args', nargs=argparse.REMAINDER)
+    parser.add_argument('-a', '--args', type=list, default=['base', 'base_top', 'objects'])
     args = parser.parse_args()
 
-    CMD[args.cmd](args)
+    CMD['copy'](args)
+    # CMD['unpack'](args)
+    CMD['render'](args)
 
 

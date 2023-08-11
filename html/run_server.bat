@@ -1,3 +1,3 @@
-python -m pip install flask waitress
-start python server.py
+py -m pip install flask waitress
+start py server.py
 start http://localhost:8880/pzmap.html
